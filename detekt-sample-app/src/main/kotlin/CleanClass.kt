@@ -4,5 +4,5 @@ class CleanClass {
         a: Int = 1,
         b: Int = 2
     ): Int = a + b
-qwertya
+2
 }

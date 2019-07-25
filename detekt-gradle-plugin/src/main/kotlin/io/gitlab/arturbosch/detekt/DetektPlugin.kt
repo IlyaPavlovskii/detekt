@@ -75,7 +75,7 @@ class DetektPlugin : Plugin<Project> {
     }
 
     private fun registerDetektDiffTask(project: Project, extension: DetektExtension) {
-        project.tasks.register("detektDiff", DetektDiff::class.java) {
+        project.tasks.register(DETEKT_DIFF_TASK_NAME, Detekt::class.java) {
             it.debugProp.set(project.provider { extension.debug })
             it.parallelProp.set(project.provider { extension.parallel })
             it.disableDefaultRuleSetsProp.set(project.provider { extension.disableDefaultRuleSets })
@@ -84,7 +84,7 @@ class DetektPlugin : Plugin<Project> {
             it.config.setFrom(project.provider { extension.config })
             it.baseline.set(project.layout.file(project.provider { extension.baseline }))
             it.plugins.set(project.provider { extension.plugins })
-            it.setSource(existingInputDirectoriesProvider(project, extension))
+            it.setSource(VcsDiffUtil.getChangedFiles(project, extension))
             it.setIncludes(defaultIncludes)
             it.setExcludes(defaultExcludes)
             it.reportsDir.set(project.provider { extension.customReportsDir })
@@ -92,11 +92,10 @@ class DetektPlugin : Plugin<Project> {
             it.setIgnoreFailures(project.provider { extension.ignoreFailures })
 
             project.subprojects.forEach { subProject ->
-                subProject.tasks.firstOrNull { t ->
-                    t is DetektDiff && t.name == "detektDiff"
-                }?.let { subprojectTask ->
-                    it.dependsOn(subprojectTask)
-                }
+                subProject.tasks.firstOrNull { t -> t is Detekt && t.name == DETEKT_DIFF_TASK_NAME }
+                    ?.let { subprojectTask ->
+                        it.dependsOn(subprojectTask)
+                    }
             }
         }
     }
@@ -207,6 +206,7 @@ class DetektPlugin : Plugin<Project> {
 
     companion object {
         const val DETEKT_TASK_NAME = "detekt"
+        const val DETEKT_DIFF_TASK_NAME = "detektDiff"
         private const val IDEA_FORMAT = "detektIdeaFormat"
         private const val IDEA_INSPECT = "detektIdeaInspect"
         private const val GENERATE_CONFIG = "detektGenerateConfig"

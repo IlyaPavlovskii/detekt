@@ -164,40 +164,8 @@ open class Detekt : SourceTask(), VerificationTask {
         group = LifecycleBasePlugin.VERIFICATION_GROUP
     }
 
-
-    val filePrefix = project.projectDir.name
-
-    private fun getDiffFiles(): String {
-        println("Start")
-        val outputStream = ByteArrayOutputStream()
-        val execResult = project.exec {
-            it.commandLine("git", "diff", "HEAD", "--name-only")
-            it.standardOutput = outputStream
-        }
-        if (execResult.exitValue == 0) {
-            val files = parseDiffFiles(outputStream.toString())
-//            println("Files: ${files.size}")
-//            println(files)
-//            val cfc = project.configurableFileCollection()
-//            cfc.from()
-//            cfc.setFrom(files)
-            setSource(files)
-        } else {
-            //TODO Throw exception
-            println("Diff failed")
-        }
-        return "asd"
-    }
-
-    private fun parseDiffFiles(streamOutput: String) =
-        streamOutput.split("\n")
-            .filter { it.startsWith(filePrefix) }
-            .map { it.removePrefix("$filePrefix/") }
-            .filter { it.isNotEmpty() }
-
     @TaskAction
     open fun check() {
-        getDiffFiles()
         if (plugins.isPresent && !pluginClasspath.isEmpty)
             throw GradleException(
                 "Cannot set value for plugins on detekt task and apply detektPlugins configuration " +

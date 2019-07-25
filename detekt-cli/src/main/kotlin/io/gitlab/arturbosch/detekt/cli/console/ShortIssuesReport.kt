@@ -11,17 +11,18 @@ class ShortIssuesReport : ConsoleReport() {
         val findings = detektion.findings
         return with(StringBuilder()) {
             findings.values.forEach { findings ->
-                findings.forEach { finding ->
-//                    append(finding.issue.severity)
-//                        .append(":")
-//                        .append(finding.id)
-//                        .append(" - ")
-//                        .append(finding.location.compact())
-//                        .append("\n")
-                    append(finding.compact()).append("\n")
+                findings.forEachIndexed { index, finding ->
+                    append(finding.compact())
+                    if (index < findings.size - 1) {
+                        append("\n")
+                    }
                 }
             }
-            toString().yellow()
+            if (isNotEmpty()) {
+                toString().yellow()
+            } else {
+                ""
+            }
         }
     }
 }

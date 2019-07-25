@@ -6,7 +6,7 @@ detekt {
 
     debug = false
     buildUponDefaultConfig = true
-    config = files("dconfig.yml")
+    //config = files("dconfig.yml")
 
     reports {
         xml.enabled = false

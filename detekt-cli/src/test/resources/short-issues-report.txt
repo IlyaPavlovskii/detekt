@@ -1,0 +1,2 @@
+TestSmell - [TestEntity] at TestFile.kt:1:1
+TestSmell - [TestEntity] at TestFile.kt:1:1

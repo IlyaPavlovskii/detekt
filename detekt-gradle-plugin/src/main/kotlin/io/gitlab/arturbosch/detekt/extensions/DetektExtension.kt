@@ -48,6 +48,10 @@ open class DetektExtension(project: Project) : CodeQualityExtension() {
             "(see https://arturbosch.github.io/detekt/extensions.html#let-detekt-know-about-your-extensions)")
     var plugins: String? = null
 
+    var cliDiffCommand: String? = null
+
+    var diffFilePrefix: String? = null
+
     companion object {
         const val DEFAULT_SRC_DIR_JAVA = "src/main/java"
         const val DEFAULT_SRC_DIR_KOTLIN = "src/main/kotlin"
