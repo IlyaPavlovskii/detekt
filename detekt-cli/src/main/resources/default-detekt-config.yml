@@ -18,6 +18,7 @@ processors:
 console-reports:
   active: true
   exclude:
+    - 'ShortIssuesReport'
   #  - 'ProjectStatisticsReport'
   #  - 'ComplexityReport'
   #  - 'NotificationReport'
