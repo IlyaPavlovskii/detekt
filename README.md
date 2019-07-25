@@ -169,6 +169,7 @@ If you contributed to detekt but your name is not in the list, please feel free 
 - [Nicola Corti](https://github.com/cortinico) - Fixed Suppress of MaxLineLenght
 - [Michael Lotkowski](https://github.com/DownMoney) - Rule improvement: False positive UnusedImport for componentN
 - [Nuno Caro](https://github.com/Pak3nuh) - Adds TXT report support on gradle plugin
+- [Ilya Pavlovskii](https://github.com/IlyaPavlovskii) - Add detekt-diff task on gradle plugin
 
 ### Mentions
 
