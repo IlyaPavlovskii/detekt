@@ -14,6 +14,13 @@ Additional [ConsoleReport](index.html)'s can be made available through the [java
 If the default reporting mechanism should be turned off, exclude the entry 'FindingsReport'
 in the 'console-reports' property of a detekt yaml config.
 
+If you want to receive a short CLI report, you can disable all of the 
+known `ConsoleReports` in the `console-reports` section and include the 
+`ShortIssuesReport`(excluded by default) in the 
+'console-reports' property of a detekt yaml config. 
+
 **Author**
 Artur Bosch
 
+**Author**
+Ilya Pavlovskii
