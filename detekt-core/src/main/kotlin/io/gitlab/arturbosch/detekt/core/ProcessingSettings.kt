@@ -32,7 +32,8 @@ data class ProcessingSettings @JvmOverloads constructor(
     val outPrinter: PrintStream = System.out,
     val errorPrinter: PrintStream = System.err,
     val autoCorrect: Boolean = false,
-    val debug: Boolean = false
+    val printerLevel: Int = toPrinterLevel(PrinterFlag.INFO, PrinterFlag.ERROR)
+
 ) {
     /**
      * Single project input path constructor.
@@ -51,7 +52,7 @@ data class ProcessingSettings @JvmOverloads constructor(
         outPrinter: PrintStream = System.out,
         errorPrinter: PrintStream = System.err,
         autoCorrect: Boolean = false,
-        debug: Boolean = false
+        printerLevel: Int = PrinterLevel.INFO_LEVEL
     ) : this(
         listOf(inputPath),
         config,
@@ -66,7 +67,7 @@ data class ProcessingSettings @JvmOverloads constructor(
         outPrinter,
         errorPrinter,
         autoCorrect,
-        debug
+        printerLevel
     )
 
     init {
@@ -87,16 +88,16 @@ data class ProcessingSettings @JvmOverloads constructor(
         createKotlinCoreEnvironment(compilerConfiguration)
     }
 
-    fun info(msg: String) = outPrinter.println(msg)
+    fun info(msg: String) = printerLevel.runBlockWhenHasFlag(PrinterFlag.INFO) {
+        outPrinter.println(msg)
+    }
 
-    fun error(msg: String, error: Throwable) {
+    fun error(msg: String, error: Throwable) = printerLevel.runBlockWhenHasFlag(PrinterFlag.ERROR) {
         errorPrinter.println(msg)
         error.printStacktraceRecursively(errorPrinter)
     }
 
-    fun debug(msg: () -> String) {
-        if (debug) {
-            outPrinter.println(msg())
-        }
+    fun debug(msg: () -> String) = printerLevel.runBlockWhenHasFlag(PrinterFlag.DEBUG) {
+        outPrinter.println(msg())
     }
 }

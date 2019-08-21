@@ -2,16 +2,7 @@ package io.gitlab.arturbosch.detekt.cli.runners
 
 import io.gitlab.arturbosch.detekt.api.Detektion
 import io.gitlab.arturbosch.detekt.api.internal.SimpleNotification
-import io.gitlab.arturbosch.detekt.cli.BuildFailure
-import io.gitlab.arturbosch.detekt.cli.CliArgs
-import io.gitlab.arturbosch.detekt.cli.OutputFacade
-import io.gitlab.arturbosch.detekt.cli.createClasspath
-import io.gitlab.arturbosch.detekt.cli.createFilters
-import io.gitlab.arturbosch.detekt.cli.createPlugins
-import io.gitlab.arturbosch.detekt.cli.getOrComputeWeightedAmountOfIssues
-import io.gitlab.arturbosch.detekt.cli.isValidAndSmallerOrEqual
-import io.gitlab.arturbosch.detekt.cli.loadConfiguration
-import io.gitlab.arturbosch.detekt.cli.maxIssues
+import io.gitlab.arturbosch.detekt.cli.*
 import io.gitlab.arturbosch.detekt.core.DetektFacade
 import io.gitlab.arturbosch.detekt.core.ProcessingSettings
 
@@ -40,6 +31,7 @@ class Runner(private val arguments: CliArgs) : Executable {
     }
 
     private fun createSettings(): ProcessingSettings = with(arguments) {
+        val resultPrinterLevel = printerLevel or (if (debug) 0b001 else 0b000)
         ProcessingSettings(
             inputPaths = inputPaths,
             config = loadConfiguration(),
@@ -51,7 +43,7 @@ class Runner(private val arguments: CliArgs) : Executable {
             classpath = createClasspath(),
             languageVersion = languageVersion,
             jvmTarget = jvmTarget,
-            debug = arguments.debug
+            printerLevel = resultPrinterLevel
         )
     }
 }

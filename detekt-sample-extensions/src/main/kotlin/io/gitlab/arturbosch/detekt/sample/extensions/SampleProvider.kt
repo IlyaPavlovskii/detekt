@@ -16,4 +16,5 @@ class SampleProvider : RuleSetProvider {
                 TooManyFunctionsTwo(config)
         ))
     }
+
 }

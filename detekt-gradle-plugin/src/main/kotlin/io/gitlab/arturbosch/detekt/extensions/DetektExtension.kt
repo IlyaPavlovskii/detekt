@@ -32,7 +32,7 @@ open class DetektExtension(project: Project) : CodeQualityExtension() {
     var baseline: File? = null
 
     var config: ConfigurableFileCollection = project.configurableFileCollection()
-
+//
     var debug: Boolean = DEFAULT_DEBUG_VALUE
 
     var parallel: Boolean = DEFAULT_PARALLEL_VALUE

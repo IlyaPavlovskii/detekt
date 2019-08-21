@@ -118,11 +118,24 @@ class CliArgs : Args {
     )
     var autoCorrect: Boolean = false
 
+    @Deprecated(
+        "This parameter is deprecated, please see `printerLevel` parameter to enable debug " +
+            "printer stream")
     @Parameter(
         names = ["--debug"],
         description = "Prints extra information about configurations and extensions."
     )
     var debug: Boolean = false
+
+    @Parameter(
+        names = ["--printer-level"],
+        description = "Prints information level type. Use `0b001` to enable debug level printer stream," +
+                "0b010 - to enable info level printer stream," +
+                "0b100 - to enable error level printer stream. You can combine more than one printer level flag, all" +
+                "than you need - combine printer flags. Example: 0b110(6) - enables INFO level with ERROR printers, " +
+                "DEBUG mode will be skipped."
+    )
+    var printerLevel: Int = 0b110
 
     @Parameter(
         names = ["--help", "-h"],
